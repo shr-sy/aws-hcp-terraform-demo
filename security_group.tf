@@ -31,12 +31,12 @@ resource "aws_security_group" "web_sg" {
   description = "Allow SSH and HTTP from ALB"
   vpc_id      = aws_vpc.main.id
 
-  # SSH access from your IP
+  # SSH access from your public IP
   ingress {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["YOUR_PUBLIC_IP/32"]  # Replace with your IP for SSH
+    cidr_blocks = ["0.0.0.0/0"]  # <-- replace with your actual IP
   }
 
   # HTTP only from ALB

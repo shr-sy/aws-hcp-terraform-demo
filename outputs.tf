@@ -1,8 +1,3 @@
-output "alb_url" {
-  value       = aws_lb.web_alb.dns_name
-  description = "Public URL to access the website via ALB"
-}
-
 output "ec2_private_ip" {
   value = aws_instance.web.private_ip
 }

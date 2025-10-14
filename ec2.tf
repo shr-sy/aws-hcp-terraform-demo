@@ -9,10 +9,10 @@ data "aws_ami" "ubuntu" {
 }
 
 resource "aws_instance" "web" {
-  ami                    = data.aws_ami.ubuntu.id
-  instance_type          = var.instance_type
-  subnet_id              = aws_subnet.private.id
-  vpc_security_group_ids = [aws_security_group.web_sg.id]
+  ami                         = data.aws_ami.ubuntu.id
+  instance_type               = var.instance_type
+  subnet_id                   = aws_subnet.private.id
+  vpc_security_group_ids      = [aws_security_group.web_sg.id]
   associate_public_ip_address = false
 
   user_data = <<-EOF
@@ -21,6 +21,7 @@ resource "aws_instance" "web" {
               apt install -y apache2 awscli
               systemctl enable apache2
               systemctl start apache2
+              # Download index.html from S3 bucket
               aws s3 cp s3://${aws_s3_bucket.app_data.bucket}/index.html /var/www/html/index.html
               EOF
 

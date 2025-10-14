@@ -41,7 +41,7 @@ data "aws_ami" "ubuntu" {
   }
 }
 
-# EC2 instance with user_data to install Apache web server
+# EC2 instance with user_data to pull HTML from S3
 resource "aws_instance" "web" {
   ami                         = data.aws_ami.ubuntu.id
   instance_type               = var.instance_type
@@ -52,10 +52,12 @@ resource "aws_instance" "web" {
   user_data = <<-EOF
               #!/bin/bash
               apt update -y
-              apt install -y apache2
+              apt install -y apache2 awscli
               systemctl enable apache2
               systemctl start apache2
-              echo "<h1>Hello from Terraform on AWS!</h1><p>Deployed via HCP Terraform 🚀</p>" > /var/www/html/index.html
+              
+              # Download the HTML file from S3
+              aws s3 cp s3://${aws_s3_bucket.app_data.bucket}/index.html /var/www/html/index.html
               EOF
 
   tags = {

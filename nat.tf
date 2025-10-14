@@ -1,18 +1,16 @@
 resource "aws_eip" "nat_eip" {
   domain = "vpc"
 
-  tags = {
-    Name = "${var.project_name}-nat-eip"
-  }
+  tags = { Name = "${var.project_name}-nat-eip" }
 }
 
 resource "aws_nat_gateway" "nat" {
   allocation_id = aws_eip.nat_eip.id
   subnet_id     = aws_subnet.public.id
+
   tags = { Name = "${var.project_name}-nat-gateway" }
 }
 
-# Private Route Table
 resource "aws_route_table" "private" {
   vpc_id = aws_vpc.main.id
 

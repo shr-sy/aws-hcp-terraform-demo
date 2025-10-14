@@ -1,17 +1,17 @@
-variable "aws_region" {
-  description = "AWS region for deployment"
+variable "project_name" {
   type        = string
+  description = "Project name prefix for resources"
+  default     = "terraform-demo"
+}
+
+variable "aws_region" {
+  type        = string
+  description = "AWS region to deploy"
   default     = "ap-south-1"
 }
 
 variable "instance_type" {
+  type        = string
   description = "EC2 instance type"
-  type        = string
-  default     = "t2.micro"
-}
-
-variable "project_name" {
-  description = "Project prefix for tagging"
-  type        = string
-  default     = "hcp-demo"
+  default     = "t3.micro"
 }

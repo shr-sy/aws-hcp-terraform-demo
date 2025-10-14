@@ -22,11 +22,11 @@ resource "aws_s3_bucket_public_access_block" "block" {
   restrict_public_buckets = true
 }
 
-# Upload a demo HTML file to the S3 bucket
-resource "aws_s3_bucket_object" "demo_file" {
-  bucket       = aws_s3_bucket.app_data.id
-  key          = "index.html"
-  content      = <<EOF
+# Upload a demo HTML file using aws_s3_object
+resource "aws_s3_object" "demo_file" {
+  bucket  = aws_s3_bucket.app_data.id
+  key     = "index.html"
+  content = <<EOF
 <h1>Hello from Terraform on AWS!</h1>
 <p>This file is served from S3 bucket: ${aws_s3_bucket.app_data.bucket}</p>
 EOF
